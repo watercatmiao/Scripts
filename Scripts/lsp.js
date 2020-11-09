@@ -19,6 +19,7 @@ hostname: *.i91porn.*,*.tbrapi.*,*.hitik.*,*.tiansexyl.*
 下载链接：
 http://web.91porn002.me/aff-cprTQ
 https://ttt.tangbr.net/af/5YYF
+https://invited.lusir030.com/c-1/a-agwG9/
 */
 let obj = JSON.parse($response.body);
 const payne = init()
@@ -80,6 +81,16 @@ function setLxs(result) {
             result.data.privilege.can_change_look.yes_no = 1;
             result.data.privilege.can_change_look.tryWatch = 120000;
             result.data.privilege.can_change_video.yes_no = 1;
+        }
+        if (result.data.hasOwnProperty('line')) {
+            let line = result.line; //Array
+            for (let i = 0; i < line; i++) {
+                if (line[i].info.title.indexOf("会员") != -1) {
+                    line[i].info.can_change.yes_no = 1;
+                    line[i].info.can_change.msg = 'PayNe带你上vip专享线路';
+                }
+            }
+            result.line = line;
         }
         if (result.data.hasOwnProperty('username')) {
             result.data.role_id = 1;
