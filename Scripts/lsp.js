@@ -84,10 +84,10 @@ function setLxs(result) {
         }
         if (result.hasOwnProperty('line')) {
             let line = result.line; //Array
-            payne.msg("路线","",JSON.stringify(line))
+            // payne.msg("路线","",JSON.stringify(line))
             for (let i = 0; i < line.length; i++) {
                 if (line[i].info.title.indexOf("会员") != -1) {
-                    payne.msg("会员","",JSON.stringify(line[i].info))
+                    // payne.msg("会员","",JSON.stringify(line[i].info))
                     line[i].info.can_change.yes_no = 1;
                     line[i].info.can_change.msg = 'PayNe带你上vip专享线路';
                 }
