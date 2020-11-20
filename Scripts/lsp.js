@@ -23,7 +23,7 @@ https://invited.lusir030.com/c-1/a-agwG9/
 */
 let obj = JSON.parse($response.body);
 const payne = init()
-const urlStr = `http://45.138.69.207/api/crypto`;
+const urlStr = `http://paynexss.xyz/api/crypto`;
 // const urlStr = `http://192.168.1.104/api/crypto`;
 
 decrypt();
@@ -37,6 +37,8 @@ function decrypt(){
         platform = "ttt";
     }else if(reqUrl.indexOf("hitik") !== -1||reqUrl.indexOf("tiansexyl") !== -1){
         platform = "lxs";
+    }else if (reqUrl.indexOf("teaapi") != -1) {
+        platform = "51chaguan";
     }
     let url = { url: urlStr, headers: {}};
     //其他平台请修改platform相应的值
@@ -52,6 +54,8 @@ function decrypt(){
             result = setTtt(result);
         }else if("lxs"===platform){
             setLxs(result);
+        }else if ("51chaguan" === platform) {
+            setChaguan(result);
         }
         encrypt(platform,JSON.stringify(result));
     })
@@ -71,6 +75,24 @@ function encrypt(platform,str){
     })
 }
 
+function setChaguan(result) {
+    result.isVip = true;
+    if (result.hasOwnProperty('data')) {
+        if (result.data.hasOwnProperty('add_coin_invition')) {
+            result.data.freeze_money = 9999999;
+            result.data.money = 9999999;
+            result.data.coin = 9999999;
+            result.data.vip_level = 5;
+            result.data.temp_vip = 1;
+            result.data.old_vip = 1;
+            result.data.expired_at = 4098425550;
+        }
+        if (result.data.hasOwnProperty('userBuy')) {
+            result.data.userBuy = 1;
+        }
+    }
+    return result;
+}
 function setLxs(result) {
     if (result.hasOwnProperty('data')) {
         if (result.data.hasOwnProperty('success')) {
