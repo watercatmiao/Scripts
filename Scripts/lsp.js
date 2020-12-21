@@ -23,8 +23,8 @@ https://invited.lusir030.com/c-1/a-agwG9/
 */
 let obj = JSON.parse($response.body);
 const payne = init()
-const urlStr = `http://paynexss.xyz/api/crypto`;
-// const urlStr = `http://192.168.1.104/api/crypto`;
+// const urlStr = `http://120.53.232.245/api/crypto`;
+const urlStr = `http://payne.cn1.utools.club/api/crypto`;
 
 decrypt();
 
@@ -37,14 +37,17 @@ function decrypt(){
         platform = "ttt";
     }else if(reqUrl.indexOf("hitik") !== -1||reqUrl.indexOf("tiansexyl") !== -1){
         platform = "lxs";
-    }else if (reqUrl.indexOf("teaapi") != -1) {
+    }else if (reqUrl.indexOf("teaapi") !== -1) {
         platform = "51chaguan";
+    }else if (reqUrl.indexOf("dton") !== -1) {
+        platform = "dtmh";
     }
     let url = { url: urlStr, headers: {}};
     //其他平台请修改platform相应的值
     url.body = `flag=decrypt&platform=` + platform + `&plaintext=&ciphertext=` + obj.data;
+    //payne.msg("请求解密:",platform,url.body);
     payne.post(url, (error, response, data) => {
-        // payne.msg("解密成功:","",data);
+        // payne.msg("解密成功:",platform,data);
         const resBody = JSON.parse(data);
         //解密网站返回的数据取data才是91的数据包,修改result返回你想要的结果
         let result = JSON.parse(resBody.data);
@@ -74,7 +77,6 @@ function encrypt(platform,str){
         payne.done(body);
     })
 }
-
 function setChaguan(result) {
     result.isVip = true;
     if (result.hasOwnProperty('data')) {
@@ -151,6 +153,16 @@ function setTtt(result) {
     result.isVip = true;
     result.daily_view = 9999999;
     if (result.hasOwnProperty('data')) {
+        if (result.data.hasOwnProperty('list')) {
+            let list = [];
+            result.data.list.forEach(function (o, i) {
+                o.isfree = 1;
+                o.coins = 0;
+                o.is_pay = true;
+                list.push(o);
+            });
+            result.data.list = list;
+        }
         if (result.data.hasOwnProperty('code')) {
             result.data.code = 0;
             result.data.msg = "无汤币限制";
@@ -162,6 +174,7 @@ function setTtt(result) {
             result.data.vip_level = 4;
             result.data.expired_at = "2099-11-07";
         }
+
     }
     return result;
 }
