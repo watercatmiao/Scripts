@@ -7,7 +7,7 @@
 #本地脚本
 
 #91短视频
-^http[s]?:\/\/.+\.(my10api|(.*91.*))\.(com|tips|app|xyz)(:\d{2,5})?\/api.php$ url script-response-body lsp.js
+^http[s]?:\/\/.+\.((my10api)|(i91porn))\.(com|cn|xyz|net|org)(:\d{2,5})?\/api.php$ url script-response-body lsp.js
 #汤头条
 ^http[s]?:\/\/.+\.(.*tbrapi.*)\.(com|tips|app|xyz|net)(:\d{2,5})?\/api.php/.+$ url script-response-body lsp.js
 #撸先生
@@ -20,11 +20,12 @@ hostname: *.i91porn.*,*.tbrapi.*,*.hitik.*,*.tiansexyl.*
 http://web.91porn002.me/aff-cprTQ
 https://ttt.tangbr.net/af/5YYF
 https://invited.lusir030.com/c-1/a-agwG9/
+https://cbazxc.cfuyong.com/download.html
 */
 let obj = JSON.parse($response.body);
 const payne = init()
-// const urlStr = `http://120.53.232.245/api/crypto`;
-const urlStr = `http://payne.cn1.utools.club/api/crypto`;
+const urlStr = `http://120.53.232.245/api/crypto`;
+// const urlStr = `http://payne.cn1.utools.club/api/crypto`;
 
 decrypt();
 
@@ -44,7 +45,7 @@ function decrypt(){
     }
     let url = { url: urlStr, headers: {}};
     //其他平台请修改platform相应的值
-    url.body = `flag=decrypt&platform=` + platform + `&plaintext=&ciphertext=` + obj.data;
+    url.body = `flag=decrypt&platform=` + platform + `&plaintext=` + obj.data;
     //payne.msg("请求解密:",platform,url.body);
     payne.post(url, (error, response, data) => {
         // payne.msg("解密成功:",platform,data);
@@ -68,7 +69,7 @@ function encrypt(platform,str){
     // payne.msg("请求内容:", "", str);
     let url = { url: urlStr, headers: {}}
     //其他平台请修改platform相应的值
-    url.body = `flag=encrypt&platform=` + platform + `&ciphertext=&plaintext=` + encodeURIComponent(str);
+    url.body = `flag=encrypt&platform=` + platform + `&plaintext=` + encodeURIComponent(str);
     payne.post(url, (error, response, data) => {
         // payne.msg("加密成功:", "", data);
         let result = JSON.parse(data);
