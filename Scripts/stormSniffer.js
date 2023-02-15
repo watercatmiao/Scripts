@@ -1,11 +1,12 @@
 /*
- * 解锁StormSniffer
- * [rewrite_local]
- * #StormSniffer
- * ^http[s]?:\/\/api\.x-storm\.com(:\d{2,5})?\/app/((user-profile\/)|(auth-device\/list\/))$ url script-response-body stormSniffer.js
- * [MITM]
- * hostname = *.x-storm.com
- * */
+解锁StormSniffer
+
+[rewrite_local]
+^http[s]?:\/\/api\.x-storm\.com(:\d{2,5})?\/app/((user-profile\/)|(auth-device\/list\/))$ url script-response-body stormSniffer.js
+
+[mitm]
+hostname = *.x-storm.com
+*/
 
 let obj = JSON.parse($response.body);
 const payne = init();
