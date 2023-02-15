@@ -2,7 +2,7 @@
 解锁StormSniffer
 
 [rewrite_local]
-^http[s]?:\/\/api\.x-storm\.com(:\d{2,5})?\/app/((user-profile\/)|(auth-device\/list\/))$ url script-response-body https://raw.githubusercontent.com/paynexss/Scripts/main/Scripts/stormSniffer.js
+^http[s]?:\/\/api\.x-storm\.com(:\d{2,5})?\/app/((user-profile\/)|(auth-device\/list\/))$ url script-response-body https://raw.githack.com/paynexss/Scripts/main/Scripts/stormSniffer.js
 
 [mitm]
 hostname = *.x-storm.com
