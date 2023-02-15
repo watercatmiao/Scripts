@@ -1,44 +1,27 @@
 /*
-解锁StormSniffer
+获取StormSnifferHeader
 
 [rewrite_local]
-^http[s]?:\/\/api\.x-storm\.com(:\d{2,5})?\/app/((user-profile\/)|(auth-device\/list\/))$ url script-response-body https://raw.githubusercontent.com/paynexss/Scripts/main/Scripts/storm-sniffer.js
+^http[s]?:\/\/api\.x-storm\.com(:\d{2,5})?\/app/.+$ url script-request-header https://raw.githubusercontent.com/paynexss/Scripts/main/Scripts/storm-sniffer-header.js
 
 [mitm]
 hostname = *.x-storm.com
 */
-const $ = new Env("stormSniffer");
-let obj = JSON.parse($response.body);
-const key = $.getdata('storm_sniffer_uid');
-const urlStr = `http://49.232.18.217:88/api/post`;
-
-if (key && key != '') {
-    post();
-} else {
-    $.done(JSON.stringify(obj));
-}
-function post(){
-    let reqUrl = $request.url;
-    let param = {
-        "type":"local",
-        "platform":"stormSniffer",
-        "key":key,
-        "data": obj.data,
-    };
-    if (reqUrl.indexOf("user-profile") !== -1 || reqUrl.indexOf("auth-device") !== -1) {
-        let url = { url: urlStr, headers: {"Content-Type": "application/json"}};
-        url.body = JSON.stringify(param);
-        // console.log("请求解密:",url.body);
-        $.post(url, (error, response, data) => {
-            // console.log("解密成功:",data);
-            obj.data = JSON.parse(data);
-            let body=JSON.stringify(obj);
-            $.done(body);
-        })
+const $ = new Env("stormSnifferHeader");
+!(async () => {
+    if (typeof $request != "undefined") {
+        let uid = $request.headers["uid"];
+        console.log('StormSnifferUid' + uid);
+        $.setdata(uid, 'storm_sniffer_uid');
+        return;
     }
-
-}
-
+})()
+    .catch((e) => {
+        $.log("", `❌失败! 原因: ${e}!`, "");
+    })
+    .finally(() => {
+        $.done();
+    });
 
 //From chavyleung's Env.js
 function Env(name, opts) {
